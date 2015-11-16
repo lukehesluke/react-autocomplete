@@ -14,13 +14,17 @@
   },
   "scripts": {
     "test": "echo 'lol'",
-    "start": "rackt server"
+    "start": "rackt server",
+    "build": "babel --presets stage-2,react lib/ --out-dir build/lib/"
   },
   "authors": [
     "Ryan Florence <rpflorence@gmail.com>"
   ],
   "license": "MIT",
   "devDependencies": {
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-react": "^6.1.2",
+    "babel-preset-stage-2": "^6.1.2",
     "rackt-cli": "^0.4.0",
     "react": "^0.13.3"
   },
