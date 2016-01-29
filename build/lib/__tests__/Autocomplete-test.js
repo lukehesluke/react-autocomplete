@@ -1,10 +1,8 @@
 'use strict';
 
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+var _addons = require('react/addons');
 
-var _reactAddons = require('react/addons');
-
-var _reactAddons2 = _interopRequireDefault(_reactAddons);
+var _addons2 = _interopRequireDefault(_addons);
 
 var _Autocomplete = require('../Autocomplete');
 
@@ -12,10 +10,13 @@ var _Autocomplete2 = _interopRequireDefault(_Autocomplete);
 
 var _assert = require('assert');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TestUtils = _addons2.default.addons.TestUtils;
+
 /* eslint func-names:0 */
-var TestUtils = _reactAddons2['default'].addons.TestUtils;
 describe('react-autocomplete', function () {
   it('should have tests', function () {
-    _assert.ok(false);
+    (0, _assert.ok)(false);
   });
 });

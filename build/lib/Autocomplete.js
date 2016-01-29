@@ -1,40 +1,14 @@
 'use strict';
 
-var _reactTransformCatchErrors2 = require('react-transform-catch-errors');
-
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
-
-var _reactTransformCatchErrors3 = _interopRequireDefault(_reactTransformCatchErrors2);
-
-var _react = require('react');
-
-var _redboxReact = require('redbox-react');
-
-var _extends = require('babel-runtime/helpers/extends')['default'];
-
-var _components = {
-  _$Unknown: {}
-};
-
-var _reactComponentWrapper = _reactTransformCatchErrors3['default']({
-  filename: 'lib/Autocomplete.js',
-  components: _components,
-  locals: [],
-  imports: [_react, _redboxReact]
-});
-
-function _wrapComponent(uniqueId) {
-  return function (ReactClass) {
-    return _reactComponentWrapper(ReactClass, uniqueId);
-  };
-}
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = require('react');
 var scrollIntoView = require('dom-scroll-into-view');
 
 var _debugStates = [];
 
-var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
+var Autocomplete = React.createClass({
+  displayName: 'Autocomplete',
 
   propTypes: {
     initialValue: React.PropTypes.any,
@@ -59,6 +33,7 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       shouldItemRender: function shouldItemRender() {
         return true;
       },
+
       menuStyle: {
         borderRadius: '3px',
         boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
@@ -70,7 +45,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
         maxHeight: '50%' }
     };
   },
-
   // TODO: don't cheat, let it flow to the bottom
   getInitialState: function getInitialState() {
     return {
@@ -79,17 +53,14 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       highlightedIndex: null
     };
   },
-
   componentWillMount: function componentWillMount() {
     this._ignoreBlur = false;
     this._performAutoCompleteOnUpdate = false;
     this._performAutoCompleteOnKeyUp = false;
   },
-
   componentWillReceiveProps: function componentWillReceiveProps() {
     this._performAutoCompleteOnUpdate = true;
   },
-
   componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
     if (this.state.isOpen === true && prevState.isOpen === false) this.setMenuPositions();
 
@@ -100,7 +71,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
 
     this.maybeScrollItemIntoView();
   },
-
   maybeScrollItemIntoView: function maybeScrollItemIntoView() {
     if (this.state.isOpen === true && this.state.highlightedIndex !== null) {
       var itemNode = React.findDOMNode(this.refs['item-' + this.state.highlightedIndex]);
@@ -108,7 +78,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true });
     }
   },
-
   handleKeyDown: function handleKeyDown(event) {
     if (this.keyDownHandlers[event.key]) this.keyDownHandlers[event.key].call(this, event);else {
       this.setState({
@@ -117,7 +86,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       });
     }
   },
-
   handleChange: function handleChange(event) {
     var _this = this;
 
@@ -128,7 +96,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       _this.props.onChange(event, _this.state.value);
     });
   },
-
   handleKeyUp: function handleKeyUp() {
     if (this._performAutoCompleteOnKeyUp) {
       this._performAutoCompleteOnKeyUp = false;
@@ -148,7 +115,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
         isOpen: true
       });
     },
-
     ArrowUp: function ArrowUp(event) {
       event.preventDefault();
       var highlightedIndex = this.state.highlightedIndex;
@@ -160,7 +126,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
         isOpen: true
       });
     },
-
     Enter: function Enter(event) {
       var _this2 = this;
 
@@ -188,7 +153,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
         });
       }
     },
-
     Escape: function Escape(event) {
       this.setState({
         highlightedIndex: null,
@@ -216,7 +180,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
 
     return items;
   },
-
   maybeAutoCompleteText: function maybeAutoCompleteText() {
     var _this4 = this;
 
@@ -237,7 +200,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       if (highlightedIndex === null) this.setState({ highlightedIndex: 0 }, setSelection);else setSelection();
     }
   },
-
   setMenuPositions: function setMenuPositions() {
     var node = React.findDOMNode(this.refs.input);
     var rect = node.getBoundingClientRect();
@@ -251,11 +213,9 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       menuWidth: rect.width + marginLeft + marginRight
     });
   },
-
   highlightItemFromMouse: function highlightItemFromMouse(index) {
     this.setState({ highlightedIndex: index });
   },
-
   selectItemFromMouse: function selectItemFromMouse(item) {
     var _this5 = this;
 
@@ -269,11 +229,9 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       _this5.setIgnoreBlur(false);
     });
   },
-
   setIgnoreBlur: function setIgnoreBlur(ignore) {
     this._ignoreBlur = ignore;
   },
-
   renderMenu: function renderMenu() {
     var _this6 = this;
 
@@ -300,7 +258,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
     var menu = this.props.renderMenu(items, this.state.value, style);
     return React.cloneElement(menu, { ref: 'menu' });
   },
-
   getActiveItemValue: function getActiveItemValue() {
     if (this.state.highlightedIndex === null) return '';else {
       var item = this.props.items[this.state.highlightedIndex];
@@ -311,7 +268,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       return item ? this.props.getItemValue(item) : '';
     }
   },
-
   handleInputBlur: function handleInputBlur() {
     if (this._ignoreBlur) return;
     this.setState({
@@ -319,16 +275,13 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       highlightedIndex: null
     });
   },
-
   handleInputFocus: function handleInputFocus() {
     if (this._ignoreBlur) return;
     this.setState({ isOpen: true });
   },
-
   handleInputClick: function handleInputClick() {
     if (this.state.isOpen === false) this.setState({ isOpen: true });
   },
-
   render: function render() {
     var _this7 = this;
 
@@ -349,13 +302,13 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
         ref: 'input',
         onFocus: this.handleInputFocus,
         onBlur: this.handleInputBlur,
-        onChange: function (event) {
+        onChange: function onChange(event) {
           return _this7.handleChange(event);
         },
-        onKeyDown: function (event) {
+        onKeyDown: function onKeyDown(event) {
           return _this7.handleKeyDown(event);
         },
-        onKeyUp: function (event) {
+        onKeyUp: function onKeyUp(event) {
           return _this7.handleKeyUp(event);
         },
         onClick: this.handleInputClick,
@@ -369,6 +322,6 @@ var Autocomplete = _wrapComponent('_$Unknown')(React.createClass({
       )
     );
   }
-}));
+});
 
 module.exports = Autocomplete;
