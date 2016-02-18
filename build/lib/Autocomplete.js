@@ -102,29 +102,42 @@ var Autocomplete = React.createClass({
       this.maybeAutoCompleteText();
     }
   },
+  handleArrowUpOrDown: function handleArrowUpOrDown(direction, event) {
+    event.preventDefault();
+    var highlightedIndex = this.state.highlightedIndex;
+
+    var numFilteredItems = this.getFilteredItems().length;
+    var index;
+    if (numFilteredItems === 0) {
+      index = null;
+    } else {
+      if (direction === 'down') {
+        if (highlightedIndex === null || highlightedIndex === numFilteredItems - 1) {
+          index = 0;
+        } else {
+          index = highlightedIndex + 1;
+        }
+      } else if (direction === 'up') {
+        if (highlightedIndex === 0 || highlightedIndex === null) {
+          index = numFilteredItems - 1;
+        } else {
+          index = highlightedIndex - 1;
+        }
+      }
+    }
+    this._performAutoCompleteOnKeyUp = true;
+    this.setState({
+      highlightedIndex: index,
+      isOpen: true
+    });
+  },
 
   keyDownHandlers: {
-    ArrowDown: function ArrowDown() {
-      event.preventDefault();
-      var highlightedIndex = this.state.highlightedIndex;
-
-      var index = highlightedIndex === null || highlightedIndex === this.getFilteredItems().length - 1 ? 0 : highlightedIndex + 1;
-      this._performAutoCompleteOnKeyUp = true;
-      this.setState({
-        highlightedIndex: index,
-        isOpen: true
-      });
+    ArrowDown: function ArrowDown(event) {
+      this.handleArrowUpOrDown('down', event);
     },
     ArrowUp: function ArrowUp(event) {
-      event.preventDefault();
-      var highlightedIndex = this.state.highlightedIndex;
-
-      var index = highlightedIndex === 0 || highlightedIndex === null ? this.getFilteredItems().length - 1 : highlightedIndex - 1;
-      this._performAutoCompleteOnKeyUp = true;
-      this.setState({
-        highlightedIndex: index,
-        isOpen: true
-      });
+      this.handleArrowUpOrDown('up', event);
     },
     Enter: function Enter(event) {
       var _this2 = this;
